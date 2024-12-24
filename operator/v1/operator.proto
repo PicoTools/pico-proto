@@ -1,0 +1,793 @@
+syntax = "proto3";
+
+package operator.v1;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+import "common/v1/common.proto";
+
+option go_package = "github.com/PicoTools/pico-shared/proto/gen/operator/v1;operatorv1";
+
+service OperatorService {
+  // Initial handshake to provide operator's cookie. If this stream
+  // will be interrupted by operator - all subscriptions on another
+  // streams will be interrupted. If operator has already subscribed on
+  // this stream - new connection with same username will be dropped.
+  rpc Hello ( HelloRequest ) returns ( stream HelloResponse );
+
+  // Subscription for gathering listeners information with runtime updates
+  rpc SubscribeListeners ( SubscribeListenersRequest ) returns ( stream SubscribeListenersResponse );
+
+  // Subscription for gathering ants information with runtime updates
+  rpc SubscribeAnts ( SubscribeAntsRequest ) returns ( stream SubscribeAntsResponse );
+
+  // Subscription for gathering operators information with runtime updates
+  rpc SubscribeOperators ( SubscribeOperatorsRequest ) returns ( stream SubscribeOperatorsResponse );
+
+  // Subscription for gathering chat's messages information with runtime updates
+  rpc SubscribeChat ( SubscribeChatRequest ) returns ( stream SubscribeChatResponse );
+
+  // Subscription for gathering credentials information with runtime updates
+  rpc SubscribeCredentials ( SubscribeCredentialsRequest ) returns ( stream SubscribeCredentialsResponse );
+
+  // Subscription for gathering ans supplying tasks information with runtime updates
+  rpc SubscribeTasks ( stream SubscribeTasksRequest ) returns ( stream SubscribeTasksResponse );
+
+  // Update color on listener
+  rpc SetListenerColor ( SetListenerColorRequest ) returns ( SetListenerColorResponse );
+
+  // Update color on list of listeners
+  rpc SetListenersColor ( SetListenersColorRequest ) returns ( SetListenersColorResponse );
+
+  // Update note on listener
+  rpc SetListenerNote ( SetListenerNoteRequest ) returns ( SetListenerNoteResponse );
+
+  // Update note on list of listeners
+  rpc SetListenersNote ( SetListenersNoteRequest ) returns ( SetListenersNoteResponse );
+
+  // Update color on ant
+  rpc SetAntColor ( SetAntColorRequest ) returns ( SetAntColorResponse );
+
+  // Update color on list of ants
+  rpc SetAntsColor ( SetAntsColorRequest ) returns ( SetAntsColorResponse );
+
+  // Update note on ant
+  rpc SetAntNote ( SetAntNoteRequest ) returns ( SetAntNoteResponse );
+
+  // Update note on list of ants
+  rpc SetAntsNote ( SetAntsNoteRequest ) returns ( SetAntsNoteNoteResponse );
+
+  // Update color on operator
+  rpc SetOperatorColor ( SetOperatorColorRequest ) returns ( SetOperatorColorResponse );
+
+  // Update color on list of operators
+  rpc SetOperatorsColor ( SetOperatorsColorRequest ) returns ( SetOperatorsColorResponse );
+
+  // Create new message in chat
+  rpc NewChatMessage ( NewChatMessageRequest ) returns ( NewChatMessageResponse );
+
+  // Create new credential
+  rpc NewCredential ( NewCredentialRequest ) returns ( NewCredentialResponse );
+
+  // Update color on credential
+  rpc SetCredentialColor ( SetCredentialColorRequest ) returns ( SetCredentialColorResponse );
+
+  // Update color on list of credentials
+  rpc SetCredentialsColor ( SetCredentialsColorRequest ) returns ( SetCredentialsColorResponse );
+
+  // Update note on credential
+  rpc SetCredentialNote ( SetCredentialNoteRequest ) returns ( SetCredentialNoteResponse );
+
+  // Update note on list of credentials
+  rpc SetCredentialsNote ( SetCredentialsNoteRequest ) returns ( SetCredentialsNoteResponse );
+
+  // Create new task group for merging tasks and messages in
+  rpc NewGroup ( stream NewGroupRequest ) returns ( NewGroupResponse );
+
+  // Cancel all tasks in queue created by operator and located in status "NEW"
+  rpc CancelTasks ( CancelTasksRequest ) returns ( CancelTasksResponse );
+
+  // Get direct task's output. Used to get task's big output
+  rpc GetTaskOutput ( GetTaskOutputRequest ) returns ( GetTaskOutputResponse );
+}
+
+
+// Message to transfer session cookie
+message SessionCookie {
+  // [MANDATORY] value of session cookie
+  string value = 1;
+}
+
+
+// --> CancelTasks
+message CancelTasksRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] Ant's ID
+  uint32 id = 2;
+}
+message CancelTasksResponse {}
+// <-- CancelTasks
+
+
+// --> SetCredentialsNote
+message SetCredentialsNoteRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] List of credential's IDs
+  repeated uint64 ids = 2;
+  // [MANDATORY] Note to set on list of credentials
+  string note = 3;
+}
+message SetCredentialsNoteResponse {}
+// <-- SetCredentialsNote
+
+
+// --> SetCredentialNote
+message SetCredentialNoteRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] Credential's ID
+  uint64 id = 2;
+  // [MANDATORY] Note to set on credential
+  string note = 3;
+}
+message SetCredentialNoteResponse {}
+// <-- SetCredentialNote
+
+
+// --> SetCredentialsColor
+message SetCredentialsColorRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] List of credential's IDs
+  repeated uint64 ids = 2;
+  // [MANDATORY] Color to set on list of credentials
+  google.protobuf.UInt32Value color = 3;
+}
+message SetCredentialsColorResponse {}
+// <-- SetCredentialsColor
+
+
+// --> SetCredentialColor
+message SetCredentialColorRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] Credential's ID
+  uint64 id = 2;
+  // [MANDATORY] Color to set on credential
+  google.protobuf.UInt32Value color = 3;
+}
+message SetCredentialColorResponse {}
+// <-- SetCredentialColor
+
+
+// --> NewCredential
+message NewCredentialRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // Username
+  google.protobuf.StringValue username = 2;
+  // Password
+  google.protobuf.StringValue password = 3;
+  // Realm
+  google.protobuf.StringValue realm = 4;
+  // Host
+  google.protobuf.StringValue host = 5;
+}
+message NewCredentialResponse {}
+// <-- NewCredential
+
+
+// --> NewChatMessage
+message NewChatMessageRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] Message in chat
+  string message = 2;
+}
+message NewChatMessageResponse {}
+// <-- NewChatMessage
+
+
+// --> SetOperatorsColor
+message SetOperatorsColorRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] List of operator's usernames
+  repeated string usernames = 2;
+  // [MANDATORY] Color to set on list of operators
+  google.protobuf.UInt32Value color = 3;
+}
+message SetOperatorsColorResponse {}
+// <-- SetOperatorsColor
+
+
+// --> SetOperatorColor
+message SetOperatorColorRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] Operator's username
+  string username = 2;
+  // [MANDATORY] Color to set on operator
+  google.protobuf.UInt32Value color = 3;
+}
+message SetOperatorColorResponse {}
+// <-- SetOperatorColor
+
+
+// --> SetListenerNote
+message SetListenerNoteRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] Listener's ID
+  uint64 id = 2;
+  // [MANDATORY] Note to set on listener
+  string note = 3;
+}
+message SetListenerNoteResponse {}
+// <-- SetListenerNote
+
+
+// --> SetAntsNote
+message SetAntsNoteRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] List of ant's IDs
+  repeated uint32 ids = 2;
+  // [MANDATORY] Note to set on list of ants
+  string note = 3;
+}
+message SetAntsNoteResponse {}
+// <-- SetAntsNote
+
+
+// --> SetAntNote
+message SetAntNoteRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] Ant's ID
+  uint32 id = 2;
+  // [MANDATORY] Note to set on ant
+  string note = 3;
+}
+message SetAntNoteResponse {}
+// <-- SetAntNote
+
+
+// --> SetAntsColor
+message SetAntsColorRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] List of ant's IDs
+  repeated uint32 ids = 2;
+  // [MANDATORY] Color to set on list of ants
+  google.protobuf.UInt32Value color = 3;
+}
+message SetAntsColorResponse {}
+// <-- SetAntsColor
+
+
+// --> SetAntColor
+message SetAntColorRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] Ant's ID
+  uint32 id = 2;
+  // [MANDATORY] Color to set on ant
+  google.protobuf.UInt32Value color = 3;
+}
+message SetAntColorResponse {}
+// <-- SetAntColor
+
+
+// --> SetListenersNote
+message SetListenersNoteRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] List of listener's IDs
+  repeated uint64 ids = 2;
+  // [MANDATORY] Not to set on list of ants
+  string note = 3;
+}
+message SetListenersNoteResponse {}
+// <-- SetListenersNote
+
+
+// --> SetListenersColor
+message SetListenersColorRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] List of listener's IDs
+  repeated uint64 ids = 2;
+  // [MANDATORY] Color to set on list of listeners
+  google.protobuf.UInt32Value color = 3;
+}
+message SetListenersColorResponse {}
+// <-- SetListenersColor
+
+
+// --> SetListenerColor
+message SetListenerColorRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] Listener's ID
+  uint64 id = 2;
+  // [MANDATORY] Color to set on listener
+  google.protobuf.UInt32Value color = 3;
+}
+message SetListenerColorResponse {}
+// <-- SetListenerColor
+
+
+// --> Hello
+message HelloRequest {
+  // [MANDATORY] Operator's client version
+  string version = 1;
+}
+// Message with handshake data from server
+message HandshakeResponse {
+  // [MANDATORY] Operator's username
+  string username = 1;
+  // [MANDATORY] Current server's timestamp
+  google.protobuf.Timestamp time = 2;
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 3;
+}
+message HelloResponse {
+  oneof response {
+    HandshakeResponse handshake = 1;
+    google.protobuf.Empty empty = 2;
+  }
+}
+// <-- Hello
+
+
+// --> SubscribeListeners
+message SubscribeListenersRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+}
+message ListenerResponse {
+  // [MANDATORY] Listener's ID
+  uint64 id = 1;
+  // Name of listener. Can be string with maximum length of 256
+  google.protobuf.StringValue name = 2;
+  // IP address which used to serving ant's server
+  google.protobuf.StringValue ip = 3;
+  // Port which used to serving ant's server
+  google.protobuf.UInt32Value port = 4;
+  // Color of listener
+  google.protobuf.UInt32Value color = 5;
+  // Note of listener
+  google.protobuf.StringValue note = 6;
+  // Last checkout timestamp
+  google.protobuf.Timestamp last = 7;
+}
+message ListenersResponse {
+  repeated ListenerResponse listeners = 1;
+}
+message ListenerColorResponse {
+  // [MANDATORY] Listener's ID
+  uint64 id = 1;
+  // New color of listener
+  google.protobuf.UInt32Value color = 2;
+}
+message ListenerNoteResponse {
+  // [MANDATORY] Listener's ID
+  uint64 id = 1;
+  // New note on listener
+  google.protobuf.StringValue note = 2;
+}
+message ListenerInfoResponse {
+  // [MANDATORY] Listener's ID
+  uint64 id = 1;
+  // Name of listener. Can be string with maximum length of 256
+  google.protobuf.StringValue name = 2;
+  // IP address which used to serving ant's server
+  google.protobuf.StringValue ip = 3;
+  // Port which used to serving ant's server
+  google.protobuf.UInt32Value port = 4;
+}
+message ListenerLastResponse {
+  // [MANDATORY] Listener's ID
+  uint64 id = 1;
+  // Last checkout timestamp
+  google.protobuf.Timestamp last = 2;
+}
+message SubscribeListenersResponse {
+  oneof response {
+    ListenerResponse listener = 1;
+    ListenersResponse listeners = 2;
+    ListenerColorResponse color = 3;
+    ListenerNoteResponse note = 4;
+    ListenerInfoResponse info = 5;
+    ListenerLastResponse last = 6;
+  }
+}
+// <-- SubscribeListeners
+
+
+// --> SubscribeAnts
+message SubscribeAntsRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+}
+message AntResponse {
+  // [MANDATORY] Ant's ID
+  uint32 id = 1;
+  // [MANDATORY] Listener's ID
+  uint64 lid = 2;
+  // External IP address of ant
+  google.protobuf.StringValue ext_ip = 3;
+  // Internal IP address of ant
+  google.protobuf.StringValue int_ip = 4;
+  // [MANDATORY] Operating system type
+  uint32 os = 5;
+  // Operating system meta information (for example kernel version)
+  google.protobuf.StringValue os_meta = 6;
+  // Hostname of compromised target
+  google.protobuf.StringValue hostname = 7;
+  // Username under which ant's process is working
+  google.protobuf.StringValue username = 8;
+  // Domain name of compromised target
+  google.protobuf.StringValue domain = 9;
+  // Is process privilged (root, high intergity, etc)
+  google.protobuf.BoolValue privileged = 10;
+  // Name of ant's process
+  google.protobuf.StringValue proc_name = 11;
+  // Ant's process ID
+  google.protobuf.UInt32Value pid = 12;
+  // [MANDATORY] Process architecture
+  uint32 arch = 13;
+  // [MANDATORY] Sleep value of ant's process (in seconds)
+  uint32 sleep = 14;
+  // [MANDATORY] Jitter value of ant's process (in range 1-99)
+  uint32 jitter = 15;
+  // [MANDATORY] Binary mask represented supported ant's capabilities
+  uint32 caps = 16;
+  // Color of ant
+  google.protobuf.UInt32Value color = 17;
+  // Note of ant
+  google.protobuf.StringValue note = 18;
+  // First checkout timestamp
+  google.protobuf.Timestamp first = 19;
+  // Last checkout timestamp
+  google.protobuf.Timestamp last = 20;
+}
+message AntsResponse {
+  // List of ants
+  repeated AntResponse ants = 1;
+}
+message AntColorResponse {
+  // [MANDATORY] Ant's ID
+  uint32 id = 1;
+  // New color of ant
+  google.protobuf.UInt32Value color = 2;
+}
+message AntNoteResponse {
+  // [MANDATORY] Ant's ID
+  uint32 id = 1;
+  // New note of ant
+  google.protobuf.StringValue note = 2;
+}
+message AntLastResponse {
+  // [MANDATORY] Ant's ID
+  uint32 id = 1;
+  // Updated last checkout timestamp
+  google.protobuf.Timestamp last = 2;
+}
+message AntSleepResponse {
+  // [MANDATORY] Ant's ID
+  uint32 id = 1;
+  // [MANDATORY] Updated sleep value of ant
+  uint32 sleep = 2;
+  // [MANDATORY] Updated jitter value of ant
+  uint32 jitter = 3;
+}
+message SubscribeAntsResponse {
+  oneof response {
+    AntResponse ant = 1;
+    AntsResponse ants = 2;
+    AntColorResponse color = 3;
+    AntNoteResponse note = 4;
+    AntLastResponse last = 5;
+    AntSleepResponse sleep = 6;
+  }
+}
+// <-- SubscribeAnts
+
+
+// --> SubscribeOperators
+message SubscribeOperatorsRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+}
+message OperatorResponse {
+  // [MANDATORY] Operator's username
+  string username = 1;
+  // Color of operator
+  google.protobuf.UInt32Value color = 2;
+  // Last checkout timestamp
+  google.protobuf.Timestamp last = 4;
+}
+message OperatorsResponse {
+  // List of operators
+  repeated OperatorResponse operators = 1;
+}
+message OperatorLastResponse {
+  // [MANDATORY] Operator's username
+  string username = 1;
+  // Last checkout timestamp
+  google.protobuf.Timestamp last = 2;
+}
+message OperatorColorResponse {
+  // [MANDATORY] Operator's username
+  string username = 1;
+  // New color of operator
+  google.protobuf.UInt32Value color = 2;
+}
+message SubscribeOperatorsResponse {
+  oneof response {
+    OperatorResponse operator = 1;
+    OperatorLastResponse last = 2;
+    OperatorColorResponse color = 3;
+    OperatorsResponse operators = 4;
+  }
+}
+// <-- SubscribeOperators
+
+
+// --> SubscribeChat
+message SubscribeChatRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+}
+message ChatResponse {
+  // Timestamp of message creation
+  google.protobuf.Timestamp created_at = 1;
+  // [MANDATORY] Author of message
+  string from = 2;
+  // [MANDATORY] Message body
+  string message = 3;
+}
+message ChatMessagesResponse {
+  // List of messages in chat
+  repeated ChatResponse messages = 1;
+}
+message SubscribeChatResponse {
+  oneof response {
+    ChatResponse message = 1;
+    ChatMessagesResponse messages = 2;
+  }
+}
+// <-- SubscribeChat
+
+
+// --> SubscribeCredentials
+message SubscribeCredentialsRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+}
+message CredentialResponse {
+  // [MANDATORY] Credential's ID
+  uint64 id = 1;
+  // Username
+  google.protobuf.StringValue username = 2;
+  // Password
+  google.protobuf.StringValue password = 3;
+  // Realm
+  google.protobuf.StringValue realm = 4;
+  // Host
+  google.protobuf.StringValue host = 5;
+  // Timestamp of credential's creation
+  google.protobuf.Timestamp created_at = 6;
+  // Note on credential
+  google.protobuf.StringValue note = 7;
+  // Note on color
+  google.protobuf.UInt32Value color = 8;
+}
+message CredentialsResponse {
+  // List of credentials
+  repeated CredentialResponse credentials = 1;
+}
+message CredentialColorResponse {
+  // [MANDATORY] Credential's ID
+  uint64 id = 1;
+  // New credential's color
+  google.protobuf.UInt32Value color = 2;
+}
+message CredentialNoteResponse {
+  // [MANDATORY] Credential's ID
+  uint64 id = 1;
+  // New credential's note
+  google.protobuf.StringValue note = 2;
+}
+message SubscribeCredentialsResponse {
+  oneof response {
+    CredentialResponse credential = 1;
+    CredentialsResponse credentials = 2;
+    CredentialColorResponse color = 3;
+    CredentialNoteResponse note = 4;
+  }
+}
+// <-- SubscribeCredentials
+
+
+// --> NewGroup
+message NewGroupRequest {
+  // Operator's session cookie
+  SessionCookie cookie = 1;
+  oneof type {
+    NewTaskGroupRequest group = 2;
+    NewTaskMessageRequest message = 3;
+    NewTaskRequest task = 4;
+  };
+}
+message NewTaskGroupRequest {
+  // [MANDATORY] Ant's ID
+  uint32 id = 1;
+  // [MANDATORY] String with command
+  string cmd = 2;
+  // [MANDATORY] Is task group visible for other operators
+  bool visible = 3;
+}
+message NewTaskMessageRequest {
+  // [MANDATORY] Message type
+  uint32 type = 1;
+  // [MANDATORY] Message body
+  string msg = 2;
+}
+message NewTaskRequest {
+  // [MANDATORY] Capability value
+  uint64 cap = 1;
+  oneof args {
+    common.v1.CapSleep sleep = 2;
+    common.v1.CapLs ls = 3;
+    common.v1.CapPwd pwd = 4;
+    common.v1.CapCd cd = 5;
+    common.v1.CapWhoami whoami = 6;
+    common.v1.CapPs ps = 7;
+    common.v1.CapCat cat = 8;
+    common.v1.CapExec exec = 9;
+    common.v1.CapCp cp = 10;
+    common.v1.CapJobs jobs = 11;
+    common.v1.CapJobkill jobkill = 12;
+    common.v1.CapKill kill = 13;
+    common.v1.CapMv mv = 14;
+    common.v1.CapMkdir mkdir = 15;
+    common.v1.CapRm rm = 16;
+    common.v1.CapExecAssembly exec_assembly = 17;
+    common.v1.CapShellcodeInjection shellcode_injection = 18;
+    common.v1.CapDownload download = 19;
+    common.v1.CapUpload upload = 20;
+    common.v1.CapPause pause = 21;
+    common.v1.CapDestruct destruct = 22;
+    common.v1.CapExecDetach exec_detach = 23;
+    common.v1.CapShell shell = 24;
+    common.v1.CapPpid ppid = 25;
+    common.v1.CapExit exit = 26;
+  };
+}
+message NewGroupResponse {}
+// <-- NewGroup
+
+
+// --> SubscribeTasks
+message SubscribeTasksRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  oneof type {
+    SubscribeTasksHelloRequest hello = 2;
+    StartPollBeaconRequest start = 3;
+    StopPollBeaconRequest stop = 4;
+  };
+}
+message SubscribeTasksHelloRequest {}
+message StartPollBeaconRequest {
+  // [MANDATORY] Ant's ID
+  uint32 id = 1;
+}
+message StopPollBeaconRequest {
+  // [MANDATORY] Ant's ID
+  uint32 id = 1;
+}
+message TasksGroupResponse {
+  // [MANDATORY] Task group ID
+  uint64 id = 1;
+  // [MANDATORY] Ant's ID
+  uint32 aid = 2;
+  // [MANDATORY] String with command
+  string cmd = 3;
+  // [MANDATORY] Author of task group
+  string author = 4;
+  // [MANDATORY] Is group visible for another operators
+  bool visible = 5;
+  // [MANDATORY] Timestamp of task group creation
+  google.protobuf.Timestamp created = 6;
+}
+message TasksMessageResponse {
+  // [MANDATORY] Task group ID
+  uint64 id = 1;
+  // [MANDATORY] Message ID
+  uint64 mid = 2;
+  // [MANDATORY] Ant's ID
+  uint32 aid = 3;
+  // [MANDATORY] Type of message
+  uint32 type = 4;
+  // [MANDATORY] Body of message
+  string message = 5;
+  // [MANDATORY] Timestamp of message creation
+  google.protobuf.Timestamp created = 6;
+}
+message TasksResponse {
+  // [MANDATORY] Task group ID
+  uint64 id = 1;
+  // [MANDATORY] Task ID
+  uint64 tid = 2;
+  // [MANDATORY] Ant's ID
+  uint32 aid = 3;
+  // [MANDATORY] Status of task
+  uint32 status = 4;
+  // Task's output blob
+  google.protobuf.BytesValue output = 5;
+  // [MANDATORY] Length of output blob
+  uint64 output_len = 6;
+  // [MANDATORY] Is output blob big
+  bool output_big = 7;
+  // [MANDATORY] Timestamp of task creation
+  google.protobuf.Timestamp created = 8;
+}
+message TasksStatusResponse {
+  // [MANDATORY] Task group ID
+  uint64 id = 1;
+  // [MANDATORY] Task ID
+  uint64 tid = 2;
+  // [MANDATORY] Ant's ID
+  uint32 aid = 3;
+  // [MANDATORY] Status of task
+  uint32 status = 4;
+}
+message TasksDoneResponse {
+  // [MANDATORY] Task group ID
+  uint64 id = 1;
+  // [MANDATORY] Task ID
+  uint64 tid = 2;
+  // [MANDATORY] Ant's ID
+  uint32 aid = 3;
+  // [MANDATORY] Status of task
+  uint32 status = 4;
+  // Task's output blob
+  google.protobuf.BytesValue output = 5;
+  // [MANDATORY] Length of output blob
+  uint64 output_len = 6;
+  // [MANDATORY] Is output blob big
+  bool output_big = 7;
+}
+message SubscribeTasksResponse {
+  oneof type {
+    TasksGroupResponse group = 1;
+    TasksMessageResponse message = 2;
+    TasksResponse task = 3;
+    TasksStatusResponse task_status = 4;
+    TasksDoneResponse task_done = 5;
+  };
+}
+// <-- SubscribeTasks
+
+
+// --> GetTaskOutput
+message GetTaskOutputRequest {
+  // [MANDATORY] Operator's session cookie
+  SessionCookie cookie = 1;
+  // [MANDATORY] Task ID
+  uint64 id = 2;
+}
+message GetTaskOutputResponse {
+  // Task's output blob
+  google.protobuf.BytesValue output = 1;
+  // [MANDATORY] Length of output blob
+  uint64 output_len = 6;
+}
+// <-- GetTaskOutput
