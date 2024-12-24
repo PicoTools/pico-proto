@@ -1,0 +1,186 @@
+syntax = "proto3";
+
+package management.v1;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/PicoTools/pico-shared/proto/gen/management/v1;managementv1";
+
+service ManagementService {
+  // Get information about all registered operators
+  rpc GetOperators ( GetOperatorsRequest ) returns ( GetOperatorsResponse );
+
+  // Create new operator
+  rpc NewOperator ( NewOperatorRequest ) returns ( NewOperatorResponse );
+
+  // Revoke operator's access token
+  rpc RevokeOperator ( RevokeOperatorRequest ) returns ( RevokeOperatorResponse );
+
+  // Regenerate operator's access token
+  rpc RegenerateOperator ( RegenerateOperatorRequest ) returns ( RegenerateOperatorResponse );
+
+  // Get information about all registered listeners
+  rpc GetListeners ( GetListenersRequest ) returns ( GetListenersResponse );
+
+  // Create new listener
+  rpc NewListener ( NewListenerRequest ) returns ( NewListenerResponse );
+
+  // Revoke listener's access token
+  rpc RevokeListener ( RevokeListenerRequest ) returns ( RevokeListenerResponse );
+
+  // Regenerate listener's access token
+  rpc RegenerateListener ( RegenerateListenerRequest ) returns ( RegenerateListenerResponse );
+
+  // Get CA certificate from generated PKI
+  rpc GetCertCA ( GetCertCARequest ) returns ( GetCertCAResponse );
+
+  // Get operator's server GRPC certificate from PKI
+  rpc GetCertOperator ( GetCertOperatorRequest ) returns ( GetCertOperatorResponse );
+
+  // Get listener's server GRPC certificate from PKI
+  rpc GetCertListener ( GetCertListenerRequest ) returns ( GetCertListenerResponse );
+}
+
+
+// Message with information about operator
+message Operator {
+  // [MANDATORY] Operator's username
+  string username = 1;
+  // Operator's access token. Has length of 32
+  google.protobuf.StringValue token = 2;
+  // Last checkout timestamp of operator
+  google.protobuf.Timestamp last = 3;
+}
+
+
+// Message with information about listener
+message Listener {
+  // [MANDATORY] Listener's ID
+  uint64 id = 1;
+  // Listener's access token. Has length of 32
+  google.protobuf.StringValue token = 2;
+  // Listener's name
+  google.protobuf.StringValue name = 3;
+  // IP address on which listener serves ant's server
+  google.protobuf.StringValue ip = 4;
+  // Port on which listnter serves ant's server
+  google.protobuf.UInt32Value port = 5;
+  // Last checkout timestamp of listener
+  google.protobuf.Timestamp last = 6;
+}
+
+
+// Message with certificate infromation
+message Certificate {
+  // String with certificate
+  string data = 1;
+}
+
+
+// --> GetOperators
+message GetOperatorsRequest {}
+message GetOperatorsResponse {
+  // List of registered operators
+  repeated Operator operators = 1;
+}
+// <-- GetOperators
+
+
+// --> NewOperator
+message NewOperatorRequest {
+  // [MANDATORY] Operator's username
+  string username = 1;
+}
+message NewOperatorResponse {
+  // Created object of operator
+  Operator operator = 1;
+}
+// <-- NewOperator
+
+
+// --> RevokeOperator
+message RevokeOperatorRequest {
+  // [MANDATORY] Operator's username
+  string username = 1;
+}
+message RevokeOperatorResponse {}
+// <-- RevokeOperator
+
+
+// --> RegenerateOperator
+message RegenerateOperatorRequest {
+  // [MANDATORY] Operator's username
+  string username = 1;
+}
+message RegenerateOperatorResponse {
+  // Updated object of operator
+  Operator operator = 1;
+}
+// <-- RegenerateOperator
+
+
+// --> GetListeners
+message GetListenersRequest {}
+message GetListenersResponse {
+  // List of registered listeners
+  repeated Listener listeners = 1;
+}
+// <-- GetListeners
+
+
+// --> NewListener
+message NewListenerRequest {}
+message NewListenerResponse {
+  // Created object of listener
+  Listener listener = 1;
+}
+// <-- NewListener
+
+
+// --> RevokeListener
+message RevokeListenerRequest {
+  // [MANDATORY] Listener's ID
+  uint64 id = 1;
+}
+message RevokeListenerResponse {}
+// <-- RevokeListener
+
+
+// --> RegenerateListener
+message RegenerateListenerRequest {
+  // [MANDATORY] Listnter's ID
+  uint64 id = 1;
+}
+message RegenerateListenerResponse {
+  // Updated object of listener
+  Listener listener = 1;
+}
+// <-- RegenerateListener
+
+
+// --> GetCertCA
+message GetCertCARequest {}
+message GetCertCAResponse {
+  // CA certificate
+  Certificate certificate = 1;
+}
+// <-- GetCertCA
+
+
+// --> GetCertOperator
+message GetCertOperatorRequest {}
+message GetCertOperatorResponse {
+  // Operator's GRPC server certificate
+  Certificate certificate = 1;
+}
+// <-- GetCertOperator
+
+
+// --> GetCertListener
+message GetCertListenerRequest {}
+message GetCertListenerResponse {
+  // Listener's GRPC server certificate
+  Certificate certificate = 1;
+}
+// <-- GetCertListener

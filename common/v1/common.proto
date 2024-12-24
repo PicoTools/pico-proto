@@ -1,0 +1,202 @@
+syntax = "proto3";
+
+package common.v1;
+
+option go_package = "github.com/PicoTools/pico-shared/proto/gen/common/v1;commonv1";
+
+// Sleep capability:
+// Change sleep and jitter values on ant prorcess
+message CapSleep {
+  // Sleep value in seconds
+  uint32 sleep = 1;
+  // Jitter value in range 1-99
+  uint32 jitter = 2;
+}
+
+
+// Listing capability:
+// Get list of files and directories specified by path
+message CapLs {
+  // Path to file or directory
+  string path = 1;
+}
+
+
+// Process working directory capability:
+// Get current ant's process working directory
+message CapPwd {}
+
+
+// Change process working directory capability:
+// Change process working directory of ant's process
+message CapCd {
+  // Path to directory
+  string path = 1;
+}
+
+
+// Whoami capability:
+// Get information about user under which ant's process working
+message CapWhoami {}
+
+
+// Process list capability:
+// Get list of process on target OS
+message CapPs {}
+
+
+// Print file's content capability:
+// Print content of file specified by path (may be used to handle different encoders)
+message CapCat {
+  // Path to file
+  string path = 1;
+}
+
+
+// Execute command capability:
+// Execute command with arguments on target OS
+message CapExec {
+  // Command to execute (may be absolute path)
+  string cmd = 1;
+  // Arguments to execute command with
+  string args = 2;
+}
+
+
+// Copy capability:
+// Copy files or directories specified with source and destination pathes
+message CapCp {
+  // Source path to file or directory
+  string src = 1;
+  // Destination path to file or directory
+  string dst = 2;
+}
+
+
+// Jobs capability:
+// Get active jobs (other capabilities execution flows) on ant
+message CapJobs {}
+
+
+// Kill job capability:
+// Kill active job on ant specified by its ID
+message CapJobkill {
+  // Job ID to kill
+  uint64 id = 1;
+}
+
+
+// Stop process capability:
+// Kill process specified by process ID (PID)
+message CapKill {
+  // Process ID to kill
+  uint64 pid = 1;
+}
+
+
+// Copy capability:
+// Move files or directories specified with source and destination pathes
+message CapMv {
+  // Source path to file or directory
+  string src = 1;
+  // Destination path to file or directory
+  string dst = 2;
+}
+
+
+// Create directory capability:
+// Create directory on target FS specified by path
+message CapMkdir {
+  // Path to directory
+  string path = 1;
+}
+
+
+// Remove files/directories capability:
+// Remove files/directories on target FS specified by path
+message CapRm {
+  // Path to file or directory
+  string path = 1;
+}
+
+
+// .NET in-memory execution capability:
+// Execute .NET binary with arguments in CLR runtime in ant's process memory
+message CapExecAssembly {
+  // Arguments to execute .NET binary with
+  string args = 1;
+  // Blob with .NET binary program
+  bytes blob = 2;
+}
+
+
+// Shellcode injection capability:
+// Inject and execute shellcode in specified PID
+message CapShellcodeInjection {
+  // PID to inject shellcode in
+  uint64 pid = 1;
+  // Shellcode blob
+  bytes blob = 2;
+}
+
+
+// File download capability:
+// Download file from target FS specified by path
+message CapDownload {
+  // Path to file or directory
+  string path = 1;
+}
+
+
+// File upload capability:
+// Upload file on target FS specified by path
+message CapUpload {
+  // Path to file or directory
+  string path = 1;
+  // Blob to upload
+  bytes blob = 2;
+}
+
+
+// Pause capability:
+// Pause ant's process execution on specified value (in seconds)
+message CapPause {
+  // Number of seconds to pause ant's execution
+  uint32 pause = 1;
+}
+
+
+// Desctruction capability:
+// Destruct ant itself (with removing of executable and self killing)
+message CapDestruct {}
+
+
+// Execute detached command capability:
+// Execute detached command with arguments on target OS (no output will be provided)
+message CapExecDetach {
+  // Command to execute (may be absolute path)
+  string cmd = 1;
+  // Arguments to execute command with
+  string args = 2;
+}
+
+
+// Execute shell command capability:
+// Execute shell command on target OS (/bin/sh, powershell.exe, etc)
+message CapShell {
+  // Command string to execute in shell
+  string cmd = 1;
+}
+
+
+// Spoof process PID capability:
+// Spoof PPID on ant's process on specified value. For rollback you can implement logic of special value, e.g. 0
+message CapPpid {
+  // Value to spood PPID on. In case of rollback can be used special value as 0 (must be handled by ant)
+  uint64 ppid = 1;
+}
+
+
+// Exit capability:
+// Stop ant's process
+message CapExit {}
