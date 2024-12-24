@@ -438,7 +438,7 @@ message AntResponse {
   // Name of ant's process
   google.protobuf.StringValue proc_name = 11;
   // Ant's process ID
-  google.protobuf.UInt32Value pid = 12;
+  google.protobuf.UInt64Value pid = 12;
   // [MANDATORY] Process architecture
   uint32 arch = 13;
   // [MANDATORY] Sleep value of ant's process (in seconds)
