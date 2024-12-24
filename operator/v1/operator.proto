@@ -682,16 +682,16 @@ message SubscribeTasksRequest {
   SessionCookie cookie = 1;
   oneof type {
     SubscribeTasksHelloRequest hello = 2;
-    StartPollBeaconRequest start = 3;
-    StopPollBeaconRequest stop = 4;
+    StartPollAntRequest start = 3;
+    StopPollAntRequest stop = 4;
   };
 }
 message SubscribeTasksHelloRequest {}
-message StartPollBeaconRequest {
+message StartPollAntRequest {
   // [MANDATORY] Ant's ID
   uint32 id = 1;
 }
-message StopPollBeaconRequest {
+message StopPollAntRequest {
   // [MANDATORY] Ant's ID
   uint32 id = 1;
 }
