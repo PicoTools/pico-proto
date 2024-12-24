@@ -116,7 +116,7 @@ message SetCredentialsNoteRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
   // [MANDATORY] List of credential's IDs
-  repeated uint64 ids = 2;
+  repeated int64 ids = 2;
   // [MANDATORY] Note to set on list of credentials
   string note = 3;
 }
@@ -129,7 +129,7 @@ message SetCredentialNoteRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
   // [MANDATORY] Credential's ID
-  uint64 id = 2;
+  int64 id = 2;
   // [MANDATORY] Note to set on credential
   string note = 3;
 }
@@ -142,7 +142,7 @@ message SetCredentialsColorRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
   // [MANDATORY] List of credential's IDs
-  repeated uint64 ids = 2;
+  repeated int64 ids = 2;
   // [MANDATORY] Color to set on list of credentials
   google.protobuf.UInt32Value color = 3;
 }
@@ -155,7 +155,7 @@ message SetCredentialColorRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
   // [MANDATORY] Credential's ID
-  uint64 id = 2;
+  int64 id = 2;
   // [MANDATORY] Color to set on credential
   google.protobuf.UInt32Value color = 3;
 }
@@ -222,7 +222,7 @@ message SetListenerNoteRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
   // [MANDATORY] Listener's ID
-  uint64 id = 2;
+  int64 id = 2;
   // [MANDATORY] Note to set on listener
   string note = 3;
 }
@@ -287,7 +287,7 @@ message SetListenersNoteRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
   // [MANDATORY] List of listener's IDs
-  repeated uint64 ids = 2;
+  repeated int64 ids = 2;
   // [MANDATORY] Not to set on list of ants
   string note = 3;
 }
@@ -300,7 +300,7 @@ message SetListenersColorRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
   // [MANDATORY] List of listener's IDs
-  repeated uint64 ids = 2;
+  repeated int64 ids = 2;
   // [MANDATORY] Color to set on list of listeners
   google.protobuf.UInt32Value color = 3;
 }
@@ -313,7 +313,7 @@ message SetListenerColorRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
   // [MANDATORY] Listener's ID
-  uint64 id = 2;
+  int64 id = 2;
   // [MANDATORY] Color to set on listener
   google.protobuf.UInt32Value color = 3;
 }
@@ -351,7 +351,7 @@ message SubscribeListenersRequest {
 }
 message ListenerResponse {
   // [MANDATORY] Listener's ID
-  uint64 id = 1;
+  int64 id = 1;
   // Name of listener. Can be string with maximum length of 256
   google.protobuf.StringValue name = 2;
   // IP address which used to serving ant's server
@@ -370,19 +370,19 @@ message ListenersResponse {
 }
 message ListenerColorResponse {
   // [MANDATORY] Listener's ID
-  uint64 id = 1;
+  int64 id = 1;
   // New color of listener
   google.protobuf.UInt32Value color = 2;
 }
 message ListenerNoteResponse {
   // [MANDATORY] Listener's ID
-  uint64 id = 1;
+  int64 id = 1;
   // New note on listener
   google.protobuf.StringValue note = 2;
 }
 message ListenerInfoResponse {
   // [MANDATORY] Listener's ID
-  uint64 id = 1;
+  int64 id = 1;
   // Name of listener. Can be string with maximum length of 256
   google.protobuf.StringValue name = 2;
   // IP address which used to serving ant's server
@@ -392,7 +392,7 @@ message ListenerInfoResponse {
 }
 message ListenerLastResponse {
   // [MANDATORY] Listener's ID
-  uint64 id = 1;
+  int64 id = 1;
   // Last checkout timestamp
   google.protobuf.Timestamp last = 2;
 }
@@ -418,7 +418,7 @@ message AntResponse {
   // [MANDATORY] Ant's ID
   uint32 id = 1;
   // [MANDATORY] Listener's ID
-  uint64 lid = 2;
+  int64 lid = 2;
   // External IP address of ant
   google.protobuf.StringValue ext_ip = 3;
   // Internal IP address of ant
@@ -572,7 +572,7 @@ message SubscribeCredentialsRequest {
 }
 message CredentialResponse {
   // [MANDATORY] Credential's ID
-  uint64 id = 1;
+  int64 id = 1;
   // Username
   google.protobuf.StringValue username = 2;
   // Password
@@ -594,13 +594,13 @@ message CredentialsResponse {
 }
 message CredentialColorResponse {
   // [MANDATORY] Credential's ID
-  uint64 id = 1;
+  int64 id = 1;
   // New credential's color
   google.protobuf.UInt32Value color = 2;
 }
 message CredentialNoteResponse {
   // [MANDATORY] Credential's ID
-  uint64 id = 1;
+  int64 id = 1;
   // New credential's note
   google.protobuf.StringValue note = 2;
 }
@@ -641,7 +641,7 @@ message NewTaskMessageRequest {
 }
 message NewTaskRequest {
   // [MANDATORY] Capability value
-  uint64 cap = 1;
+  uint32 cap = 1;
   oneof args {
     common.v1.CapSleep sleep = 2;
     common.v1.CapLs ls = 3;
@@ -695,7 +695,7 @@ message StopPollBeaconRequest {
 }
 message TasksGroupResponse {
   // [MANDATORY] Task group ID
-  uint64 id = 1;
+  int64 id = 1;
   // [MANDATORY] Ant's ID
   uint32 aid = 2;
   // [MANDATORY] String with command
@@ -709,9 +709,9 @@ message TasksGroupResponse {
 }
 message TasksMessageResponse {
   // [MANDATORY] Task group ID
-  uint64 id = 1;
+  int64 id = 1;
   // [MANDATORY] Message ID
-  uint64 mid = 2;
+  int64 mid = 2;
   // [MANDATORY] Ant's ID
   uint32 aid = 3;
   // [MANDATORY] Type of message
@@ -723,9 +723,9 @@ message TasksMessageResponse {
 }
 message TasksResponse {
   // [MANDATORY] Task group ID
-  uint64 id = 1;
+  int64 id = 1;
   // [MANDATORY] Task ID
-  uint64 tid = 2;
+  int64 tid = 2;
   // [MANDATORY] Ant's ID
   uint32 aid = 3;
   // [MANDATORY] Status of task
@@ -741,9 +741,9 @@ message TasksResponse {
 }
 message TasksStatusResponse {
   // [MANDATORY] Task group ID
-  uint64 id = 1;
+  int64 id = 1;
   // [MANDATORY] Task ID
-  uint64 tid = 2;
+  int64 tid = 2;
   // [MANDATORY] Ant's ID
   uint32 aid = 3;
   // [MANDATORY] Status of task
@@ -751,9 +751,9 @@ message TasksStatusResponse {
 }
 message TasksDoneResponse {
   // [MANDATORY] Task group ID
-  uint64 id = 1;
+  int64 id = 1;
   // [MANDATORY] Task ID
-  uint64 tid = 2;
+  int64 tid = 2;
   // [MANDATORY] Ant's ID
   uint32 aid = 3;
   // [MANDATORY] Status of task
@@ -782,7 +782,7 @@ message GetTaskOutputRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
   // [MANDATORY] Task ID
-  uint64 id = 2;
+  int64 id = 2;
 }
 message GetTaskOutputResponse {
   // Task's output blob

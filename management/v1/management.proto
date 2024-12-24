@@ -57,7 +57,7 @@ message Operator {
 // Message with information about listener
 message Listener {
   // [MANDATORY] Listener's ID
-  uint64 id = 1;
+  int64 id = 1;
   // Listener's access token. Has length of 32
   google.protobuf.StringValue token = 2;
   // Listener's name
@@ -141,7 +141,7 @@ message NewListenerResponse {
 // --> RevokeListener
 message RevokeListenerRequest {
   // [MANDATORY] Listener's ID
-  uint64 id = 1;
+  int64 id = 1;
 }
 message RevokeListenerResponse {}
 // <-- RevokeListener
@@ -150,7 +150,7 @@ message RevokeListenerResponse {}
 // --> RegenerateListener
 message RegenerateListenerRequest {
   // [MANDATORY] Listnter's ID
-  uint64 id = 1;
+  int64 id = 1;
 }
 message RegenerateListenerResponse {
   // Updated object of listener
