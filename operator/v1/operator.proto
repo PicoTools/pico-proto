@@ -56,7 +56,7 @@ service OperatorService {
   rpc SetAntNote ( SetAntNoteRequest ) returns ( SetAntNoteResponse );
 
   // Update note on list of ants
-  rpc SetAntsNote ( SetAntsNoteRequest ) returns ( SetAntsNoteNoteResponse );
+  rpc SetAntsNote ( SetAntsNoteRequest ) returns ( SetAntsNoteResponse );
 
   // Update color on operator
   rpc SetOperatorColor ( SetOperatorColorRequest ) returns ( SetOperatorColorResponse );
