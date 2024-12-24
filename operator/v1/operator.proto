@@ -545,12 +545,14 @@ message SubscribeChatRequest {
   SessionCookie cookie = 1;
 }
 message ChatResponse {
-  // Timestamp of message creation
+  // [MANDATORY] Timestamp of message creation
   google.protobuf.Timestamp created_at = 1;
-  // [MANDATORY] Author of message
-  string from = 2;
+  // Author of message
+  google.protobuf.StringValue from = 2;
   // [MANDATORY] Message body
   string message = 3;
+  // [MANDATORY] Is message created by server
+  bool is_server = 4;
 }
 message ChatMessagesResponse {
   // List of messages in chat
