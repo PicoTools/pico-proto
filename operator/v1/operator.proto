@@ -82,8 +82,8 @@ service OperatorService {
   // Update note on list of credentials
   rpc SetCredentialsNote ( SetCredentialsNoteRequest ) returns ( SetCredentialsNoteResponse );
 
-  // Create new task group for merging tasks and messages in
-  rpc NewGroup ( stream NewGroupRequest ) returns ( NewGroupResponse );
+  // Create new command for merging tasks and messages in
+  rpc NewCommand ( stream NewCommandRequest ) returns ( NewCommandResponse );
 
   // Cancel all tasks in queue created by operator and located in status "NEW"
   rpc CancelTasks ( CancelTasksRequest ) returns ( CancelTasksResponse );
@@ -617,31 +617,31 @@ message SubscribeCredentialsResponse {
 // <-- SubscribeCredentials
 
 
-// --> NewGroup
-message NewGroupRequest {
+// --> NewCommand
+message NewCommandRequest {
   // Operator's session cookie
   SessionCookie cookie = 1;
   oneof type {
-    NewTaskGroupRequest group = 2;
-    NewTaskMessageRequest message = 3;
-    NewTaskRequest task = 4;
+    CreateCommandRequest command = 2;
+    CreateMessageRequest message = 3;
+    CreateTaskRequest task = 4;
   };
 }
-message NewTaskGroupRequest {
+message CreateCommandRequest {
   // [MANDATORY] Ant's ID
   uint32 id = 1;
   // [MANDATORY] String with command
   string cmd = 2;
-  // [MANDATORY] Is task group visible for other operators
+  // [MANDATORY] Is command visible for other operators
   bool visible = 3;
 }
-message NewTaskMessageRequest {
+message CreateMessageRequest {
   // [MANDATORY] Message type
   uint32 type = 1;
   // [MANDATORY] Message body
   string msg = 2;
 }
-message NewTaskRequest {
+message CreateTaskRequest {
   // [MANDATORY] Capability value
   uint32 cap = 1;
   oneof args {
@@ -672,8 +672,8 @@ message NewTaskRequest {
     common.v1.CapExit exit = 26;
   };
 }
-message NewGroupResponse {}
-// <-- NewGroup
+message NewCommandResponse {}
+// <-- NewCommand
 
 
 // --> SubscribeTasks
@@ -695,22 +695,22 @@ message StopPollAntRequest {
   // [MANDATORY] Ant's ID
   uint32 id = 1;
 }
-message TasksGroupResponse {
-  // [MANDATORY] Task group ID
+message CommandResponse {
+  // [MANDATORY] Command ID
   int64 id = 1;
   // [MANDATORY] Ant's ID
   uint32 aid = 2;
   // [MANDATORY] String with command
   string cmd = 3;
-  // [MANDATORY] Author of task group
+  // [MANDATORY] Author of comman
   string author = 4;
-  // [MANDATORY] Is group visible for another operators
+  // [MANDATORY] Is comman visible for another operators
   bool visible = 5;
-  // [MANDATORY] Timestamp of task group creation
+  // [MANDATORY] Timestamp of command creation
   google.protobuf.Timestamp created = 6;
 }
-message TasksMessageResponse {
-  // [MANDATORY] Task group ID
+message MessageResponse {
+  // [MANDATORY] Command ID
   int64 id = 1;
   // [MANDATORY] Message ID
   int64 mid = 2;
@@ -723,8 +723,8 @@ message TasksMessageResponse {
   // [MANDATORY] Timestamp of message creation
   google.protobuf.Timestamp created = 6;
 }
-message TasksResponse {
-  // [MANDATORY] Task group ID
+message TaskResponse {
+  // [MANDATORY] Command ID
   int64 id = 1;
   // [MANDATORY] Task ID
   int64 tid = 2;
@@ -741,8 +741,8 @@ message TasksResponse {
   // [MANDATORY] Timestamp of task creation
   google.protobuf.Timestamp created = 8;
 }
-message TasksStatusResponse {
-  // [MANDATORY] Task group ID
+message TaskStatusResponse {
+  // [MANDATORY] Command ID
   int64 id = 1;
   // [MANDATORY] Task ID
   int64 tid = 2;
@@ -751,8 +751,8 @@ message TasksStatusResponse {
   // [MANDATORY] Status of task
   uint32 status = 4;
 }
-message TasksDoneResponse {
-  // [MANDATORY] Task group ID
+message TaskDoneResponse {
+  // [MANDATORY] Command ID
   int64 id = 1;
   // [MANDATORY] Task ID
   int64 tid = 2;
@@ -769,11 +769,11 @@ message TasksDoneResponse {
 }
 message SubscribeTasksResponse {
   oneof type {
-    TasksGroupResponse group = 1;
-    TasksMessageResponse message = 2;
-    TasksResponse task = 3;
-    TasksStatusResponse task_status = 4;
-    TasksDoneResponse task_done = 5;
+    CommandResponse command = 1;
+    MessageResponse message = 2;
+    TaskResponse task = 3;
+    TaskStatusResponse task_status = 4;
+    TaskDoneResponse task_done = 5;
   };
 }
 // <-- SubscribeTasks
