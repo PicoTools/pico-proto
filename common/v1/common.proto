@@ -5,7 +5,7 @@ package common.v1;
 option go_package = "github.com/PicoTools/pico-shared/proto/gen/common/v1;commonv1";
 
 // Sleep capability:
-// Change sleep and jitter values on ant prorcess
+// Change sleep and jitter values on agent prorcess
 message CapSleep {
   // Sleep value in seconds
   uint32 sleep = 1;
@@ -23,12 +23,12 @@ message CapLs {
 
 
 // Process working directory capability:
-// Get current ant's process working directory
+// Get current agent's process working directory
 message CapPwd {}
 
 
 // Change process working directory capability:
-// Change process working directory of ant's process
+// Change process working directory of agent's process
 message CapCd {
   // Path to directory
   string path = 1;
@@ -36,7 +36,7 @@ message CapCd {
 
 
 // Whoami capability:
-// Get information about user under which ant's process working
+// Get information about user under which agent's process working
 message CapWhoami {}
 
 
@@ -74,12 +74,12 @@ message CapCp {
 
 
 // Jobs capability:
-// Get active jobs (other capabilities execution flows) on ant
+// Get active jobs (other capabilities execution flows) on agent
 message CapJobs {}
 
 
 // Kill job capability:
-// Kill active job on ant specified by its ID
+// Kill active job on agent specified by its ID
 message CapJobkill {
   // Job ID to kill
   uint64 id = 1;
@@ -121,7 +121,7 @@ message CapRm {
 
 
 // .NET in-memory execution capability:
-// Execute .NET binary with arguments in CLR runtime in ant's process memory
+// Execute .NET binary with arguments in CLR runtime in agent's process memory
 message CapExecAssembly {
   // Arguments to execute .NET binary with
   string args = 1;
@@ -159,16 +159,16 @@ message CapUpload {
 
 
 // Pause capability:
-// Pause ant's process execution on specified value (in seconds)
+// Pause agent's process execution on specified value (in seconds)
 message CapPause {
-  // Number of seconds to pause ant's execution
+  // Number of seconds to pause agent's execution
   uint32 pause = 1;
 }
 
 
 // Desctruction capability:
-// Destruct ant itself (with removing of executable and self killing)
-message CapDestruct {}
+// Destruct agent itself (with removing of executable and self killing)
+message CapDestroy {}
 
 
 // Execute detached command capability:
@@ -190,13 +190,13 @@ message CapShell {
 
 
 // Spoof process PID capability:
-// Spoof PPID on ant's process on specified value. For rollback you can implement logic of special value, e.g. 0
+// Spoof PPID on agent's process on specified value. For rollback you can implement logic of special value, e.g. 0
 message CapPpid {
-  // Value to spood PPID on. In case of rollback can be used special value as 0 (must be handled by ant)
+  // Value to spood PPID on. In case of rollback can be used special value as 0 (must be handled by agent)
   uint64 ppid = 1;
 }
 
 
 // Exit capability:
-// Stop ant's process
+// Stop agent's process
 message CapExit {}
