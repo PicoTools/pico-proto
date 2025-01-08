@@ -665,7 +665,7 @@ message CreateTaskRequest {
     common.v1.CapDownload download = 19;
     common.v1.CapUpload upload = 20;
     common.v1.CapPause pause = 21;
-    common.v1.CapDestruct destruct = 22;
+    common.v1.CapDestroy destruct = 22;
     common.v1.CapExecDetach exec_detach = 23;
     common.v1.CapShell shell = 24;
     common.v1.CapPpid ppid = 25;
