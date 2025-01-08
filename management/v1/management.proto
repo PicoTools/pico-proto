@@ -62,9 +62,9 @@ message Listener {
   google.protobuf.StringValue token = 2;
   // Listener's name
   google.protobuf.StringValue name = 3;
-  // IP address on which listener serves ant's server
+  // IP address on which listener serves agent's server
   google.protobuf.StringValue ip = 4;
-  // Port on which listnter serves ant's server
+  // Port on which listnter serves agent's server
   google.protobuf.UInt32Value port = 5;
   // Last checkout timestamp of listener
   google.protobuf.Timestamp last = 6;

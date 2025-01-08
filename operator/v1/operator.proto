@@ -19,8 +19,8 @@ service OperatorService {
   // Subscription for gathering listeners information with runtime updates
   rpc SubscribeListeners ( SubscribeListenersRequest ) returns ( stream SubscribeListenersResponse );
 
-  // Subscription for gathering ants information with runtime updates
-  rpc SubscribeAnts ( SubscribeAntsRequest ) returns ( stream SubscribeAntsResponse );
+  // Subscription for gathering agents information with runtime updates
+  rpc SubscribeAgents ( SubscribeAgentsRequest ) returns ( stream SubscribeAgentsResponse );
 
   // Subscription for gathering operators information with runtime updates
   rpc SubscribeOperators ( SubscribeOperatorsRequest ) returns ( stream SubscribeOperatorsResponse );
@@ -31,7 +31,7 @@ service OperatorService {
   // Subscription for gathering credentials information with runtime updates
   rpc SubscribeCredentials ( SubscribeCredentialsRequest ) returns ( stream SubscribeCredentialsResponse );
 
-  // Subscription for gathering ans supplying tasks information with runtime updates
+  // Subscription for gathering agent's supplying tasks information with runtime updates
   rpc SubscribeTasks ( stream SubscribeTasksRequest ) returns ( stream SubscribeTasksResponse );
 
   // Update color on listener
@@ -46,17 +46,17 @@ service OperatorService {
   // Update note on list of listeners
   rpc SetListenersNote ( SetListenersNoteRequest ) returns ( SetListenersNoteResponse );
 
-  // Update color on ant
-  rpc SetAntColor ( SetAntColorRequest ) returns ( SetAntColorResponse );
+  // Update color on agent
+  rpc SetAgentColor ( SetAgentColorRequest ) returns ( SetAgentColorResponse );
 
-  // Update color on list of ants
-  rpc SetAntsColor ( SetAntsColorRequest ) returns ( SetAntsColorResponse );
+  // Update color on list of agents
+  rpc SetAgentsColor ( SetAgentsColorRequest ) returns ( SetAgentsColorResponse );
 
-  // Update note on ant
-  rpc SetAntNote ( SetAntNoteRequest ) returns ( SetAntNoteResponse );
+  // Update note on agent
+  rpc SetAgentNote ( SetAgentNoteRequest ) returns ( SetAgentNoteResponse );
 
-  // Update note on list of ants
-  rpc SetAntsNote ( SetAntsNoteRequest ) returns ( SetAntsNoteResponse );
+  // Update note on list of agents
+  rpc SetAgentsNote ( SetAgentsNoteRequest ) returns ( SetAgentsNoteResponse );
 
   // Update color on operator
   rpc SetOperatorColor ( SetOperatorColorRequest ) returns ( SetOperatorColorResponse );
@@ -104,7 +104,7 @@ message SessionCookie {
 message CancelTasksRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
-  // [MANDATORY] Ant's ID
+  // [MANDATORY] Agent's ID
   uint32 id = 2;
 }
 message CancelTasksResponse {}
@@ -230,56 +230,56 @@ message SetListenerNoteResponse {}
 // <-- SetListenerNote
 
 
-// --> SetAntsNote
-message SetAntsNoteRequest {
+// --> SetAgentsNote
+message SetAgentsNoteRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
-  // [MANDATORY] List of ant's IDs
+  // [MANDATORY] List of agent's IDs
   repeated uint32 ids = 2;
-  // [MANDATORY] Note to set on list of ants
+  // [MANDATORY] Note to set on list of agents
   string note = 3;
 }
-message SetAntsNoteResponse {}
-// <-- SetAntsNote
+message SetAgentsNoteResponse {}
+// <-- SetAgentsNote
 
 
-// --> SetAntNote
-message SetAntNoteRequest {
+// --> SetAgentNote
+message SetAgentNoteRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
-  // [MANDATORY] Ant's ID
+  // [MANDATORY] Agent's ID
   uint32 id = 2;
-  // [MANDATORY] Note to set on ant
+  // [MANDATORY] Note to set on agent
   string note = 3;
 }
-message SetAntNoteResponse {}
-// <-- SetAntNote
+message SetAgentNoteResponse {}
+// <-- SetAgentNote
 
 
-// --> SetAntsColor
-message SetAntsColorRequest {
+// --> SetAgentsColor
+message SetAgentsColorRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
-  // [MANDATORY] List of ant's IDs
+  // [MANDATORY] List of agent's IDs
   repeated uint32 ids = 2;
-  // [MANDATORY] Color to set on list of ants
+  // [MANDATORY] Color to set on list of agents
   google.protobuf.UInt32Value color = 3;
 }
-message SetAntsColorResponse {}
-// <-- SetAntsColor
+message SetAgentsColorResponse {}
+// <-- SetAgentsColor
 
 
-// --> SetAntColor
-message SetAntColorRequest {
+// --> SetAgentColor
+message SetAgentColorRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
-  // [MANDATORY] Ant's ID
+  // [MANDATORY] Agent's ID
   uint32 id = 2;
-  // [MANDATORY] Color to set on ant
+  // [MANDATORY] Color to set on agent
   google.protobuf.UInt32Value color = 3;
 }
-message SetAntColorResponse {}
-// <-- SetAntColor
+message SetAgentColorResponse {}
+// <-- SetAgentColor
 
 
 // --> SetListenersNote
@@ -288,7 +288,7 @@ message SetListenersNoteRequest {
   SessionCookie cookie = 1;
   // [MANDATORY] List of listener's IDs
   repeated int64 ids = 2;
-  // [MANDATORY] Not to set on list of ants
+  // [MANDATORY] Not to set on list of agents
   string note = 3;
 }
 message SetListenersNoteResponse {}
@@ -354,9 +354,9 @@ message ListenerResponse {
   int64 id = 1;
   // Name of listener. Can be string with maximum length of 256
   google.protobuf.StringValue name = 2;
-  // IP address which used to serving ant's server
+  // IP address which used to serving agent's server
   google.protobuf.StringValue ip = 3;
-  // Port which used to serving ant's server
+  // Port which used to serving agent's server
   google.protobuf.UInt32Value port = 4;
   // Color of listener
   google.protobuf.UInt32Value color = 5;
@@ -385,9 +385,9 @@ message ListenerInfoResponse {
   int64 id = 1;
   // Name of listener. Can be string with maximum length of 256
   google.protobuf.StringValue name = 2;
-  // IP address which used to serving ant's server
+  // IP address which used to serving agent's server
   google.protobuf.StringValue ip = 3;
-  // Port which used to serving ant's server
+  // Port which used to serving agent's server
   google.protobuf.UInt32Value port = 4;
 }
 message ListenerLastResponse {
@@ -409,19 +409,19 @@ message SubscribeListenersResponse {
 // <-- SubscribeListeners
 
 
-// --> SubscribeAnts
-message SubscribeAntsRequest {
+// --> SubscribeAgents
+message SubscribeAgentsRequest {
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 1;
 }
-message AntResponse {
-  // [MANDATORY] Ant's ID
+message AgentResponse {
+  // [MANDATORY] Agent's ID
   uint32 id = 1;
   // [MANDATORY] Listener's ID
   int64 lid = 2;
-  // External IP address of ant
+  // External IP address of agent
   google.protobuf.StringValue ext_ip = 3;
-  // Internal IP address of ant
+  // Internal IP address of agent
   google.protobuf.StringValue int_ip = 4;
   // [MANDATORY] Operating system type
   uint32 os = 5;
@@ -429,74 +429,74 @@ message AntResponse {
   google.protobuf.StringValue os_meta = 6;
   // Hostname of compromised target
   google.protobuf.StringValue hostname = 7;
-  // Username under which ant's process is working
+  // Username under which agent's process is working
   google.protobuf.StringValue username = 8;
   // Domain name of compromised target
   google.protobuf.StringValue domain = 9;
   // Is process privilged (root, high intergity, etc)
   google.protobuf.BoolValue privileged = 10;
-  // Name of ant's process
+  // Name of agent's process
   google.protobuf.StringValue proc_name = 11;
-  // Ant's process ID
+  // Agent's process ID
   google.protobuf.UInt64Value pid = 12;
   // [MANDATORY] Process architecture
   uint32 arch = 13;
-  // [MANDATORY] Sleep value of ant's process (in seconds)
+  // [MANDATORY] Sleep value of agent's process (in seconds)
   uint32 sleep = 14;
-  // [MANDATORY] Jitter value of ant's process (in range 1-99)
+  // [MANDATORY] Jitter value of agent's process (in range 1-99)
   uint32 jitter = 15;
-  // [MANDATORY] Binary mask represented supported ant's capabilities
+  // [MANDATORY] Binary mask represented supported agent's capabilities
   uint32 caps = 16;
-  // Color of ant
+  // Color of agent
   google.protobuf.UInt32Value color = 17;
-  // Note of ant
+  // Note of agent
   google.protobuf.StringValue note = 18;
   // First checkout timestamp
   google.protobuf.Timestamp first = 19;
   // Last checkout timestamp
   google.protobuf.Timestamp last = 20;
 }
-message AntsResponse {
-  // List of ants
-  repeated AntResponse ants = 1;
+message AgentsResponse {
+  // List of agents
+  repeated AgentResponse agents = 1;
 }
-message AntColorResponse {
-  // [MANDATORY] Ant's ID
+message AgentColorResponse {
+  // [MANDATORY] Agent's ID
   uint32 id = 1;
-  // New color of ant
+  // New color of agent
   google.protobuf.UInt32Value color = 2;
 }
-message AntNoteResponse {
-  // [MANDATORY] Ant's ID
+message AgentNoteResponse {
+  // [MANDATORY] Agent's ID
   uint32 id = 1;
-  // New note of ant
+  // New note of agent
   google.protobuf.StringValue note = 2;
 }
-message AntLastResponse {
-  // [MANDATORY] Ant's ID
+message AgentLastResponse {
+  // [MANDATORY] Agent's ID
   uint32 id = 1;
   // Updated last checkout timestamp
   google.protobuf.Timestamp last = 2;
 }
-message AntSleepResponse {
-  // [MANDATORY] Ant's ID
+message AgentSleepResponse {
+  // [MANDATORY] Agent's ID
   uint32 id = 1;
-  // [MANDATORY] Updated sleep value of ant
+  // [MANDATORY] Updated sleep value of agent
   uint32 sleep = 2;
-  // [MANDATORY] Updated jitter value of ant
+  // [MANDATORY] Updated jitter value of agent
   uint32 jitter = 3;
 }
-message SubscribeAntsResponse {
+message SubscribeAgentsResponse {
   oneof response {
-    AntResponse ant = 1;
-    AntsResponse ants = 2;
-    AntColorResponse color = 3;
-    AntNoteResponse note = 4;
-    AntLastResponse last = 5;
-    AntSleepResponse sleep = 6;
+    AgentResponse agent = 1;
+    AgentsResponse agents = 2;
+    AgentColorResponse color = 3;
+    AgentNoteResponse note = 4;
+    AgentLastResponse last = 5;
+    AgentSleepResponse sleep = 6;
   }
 }
-// <-- SubscribeAnts
+// <-- SubscribeAgents
 
 
 // --> SubscribeOperators
@@ -628,7 +628,7 @@ message NewCommandRequest {
   };
 }
 message CreateCommandRequest {
-  // [MANDATORY] Ant's ID
+  // [MANDATORY] Agent's ID
   uint32 id = 1;
   // [MANDATORY] String with command
   string cmd = 2;
@@ -682,23 +682,23 @@ message SubscribeTasksRequest {
   SessionCookie cookie = 1;
   oneof type {
     SubscribeTasksHelloRequest hello = 2;
-    StartPollAntRequest start = 3;
-    StopPollAntRequest stop = 4;
+    StartPollAgentRequest start = 3;
+    StopPollAgentRequest stop = 4;
   };
 }
 message SubscribeTasksHelloRequest {}
-message StartPollAntRequest {
-  // [MANDATORY] Ant's ID
+message StartPollAgentRequest {
+  // [MANDATORY] Agent's ID
   uint32 id = 1;
 }
-message StopPollAntRequest {
-  // [MANDATORY] Ant's ID
+message StopPollAgentRequest {
+  // [MANDATORY] Agent's ID
   uint32 id = 1;
 }
 message CommandResponse {
   // [MANDATORY] Command ID
   int64 id = 1;
-  // [MANDATORY] Ant's ID
+  // [MANDATORY] Agent's ID
   uint32 aid = 2;
   // [MANDATORY] String with command
   string cmd = 3;
@@ -714,7 +714,7 @@ message MessageResponse {
   int64 id = 1;
   // [MANDATORY] Message ID
   int64 mid = 2;
-  // [MANDATORY] Ant's ID
+  // [MANDATORY] Agent's ID
   uint32 aid = 3;
   // [MANDATORY] Type of message
   uint32 type = 4;
@@ -728,7 +728,7 @@ message TaskResponse {
   int64 id = 1;
   // [MANDATORY] Task ID
   int64 tid = 2;
-  // [MANDATORY] Ant's ID
+  // [MANDATORY] Agent's ID
   uint32 aid = 3;
   // [MANDATORY] Status of task
   uint32 status = 4;
@@ -746,7 +746,7 @@ message TaskStatusResponse {
   int64 id = 1;
   // [MANDATORY] Task ID
   int64 tid = 2;
-  // [MANDATORY] Ant's ID
+  // [MANDATORY] Agent's ID
   uint32 aid = 3;
   // [MANDATORY] Status of task
   uint32 status = 4;
@@ -756,7 +756,7 @@ message TaskDoneResponse {
   int64 id = 1;
   // [MANDATORY] Task ID
   int64 tid = 2;
-  // [MANDATORY] Ant's ID
+  // [MANDATORY] Agent's ID
   uint32 aid = 3;
   // [MANDATORY] Status of task
   uint32 status = 4;
