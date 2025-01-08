@@ -106,7 +106,7 @@ message GetTaskResponse {
     common.v1.CapDownload download = 20;
     common.v1.CapUpload upload = 21;
     common.v1.CapPause pause = 22;
-    common.v1.CapDestroy destruct = 23;
+    common.v1.CapDestroy destroy = 23;
     common.v1.CapExecDetach exec_detach = 24;
     common.v1.CapShell shell = 25;
     common.v1.CapPpid ppid = 26;
