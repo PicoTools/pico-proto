@@ -167,7 +167,7 @@ message CapPause {
 
 
 // Desctruction capability:
-// Destruct agent itself (with removing of executable and self killing)
+// Destroy agent itself (with removing of executable and self killing)
 message CapDestroy {}
 
 
