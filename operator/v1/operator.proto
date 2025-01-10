@@ -740,6 +740,8 @@ message TaskResponse {
   bool output_big = 7;
   // [MANDATORY] Timestamp of task creation
   google.protobuf.Timestamp created = 8;
+  // [MANDATORY] Capability of task
+  uint32 cap = 9;
 }
 message TaskStatusResponse {
   // [MANDATORY] Command ID
