@@ -338,7 +338,6 @@ message HandshakeResponse {
 message HelloResponse {
   oneof response {
     HandshakeResponse handshake = 1;
-    google.protobuf.Empty empty = 2;
   }
 }
 // <-- Hello
