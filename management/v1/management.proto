@@ -35,10 +35,10 @@ service ManagementService {
   // Get CA certificate from generated PKI
   rpc GetCertCA ( GetCertCARequest ) returns ( GetCertCAResponse );
 
-  // Get operator's server GRPC certificate from PKI
+  // Get operator's server gRPC certificate from PKI
   rpc GetCertOperator ( GetCertOperatorRequest ) returns ( GetCertOperatorResponse );
 
-  // Get listener's server GRPC certificate from PKI
+  // Get listener's server gRPC certificate from PKI
   rpc GetCertListener ( GetCertListenerRequest ) returns ( GetCertListenerResponse );
 }
 
@@ -171,7 +171,7 @@ message GetCertCAResponse {
 // --> GetCertOperator
 message GetCertOperatorRequest {}
 message GetCertOperatorResponse {
-  // Operator's GRPC server certificate
+  // Operator's gRPC server certificate
   Certificate certificate = 1;
 }
 // <-- GetCertOperator
@@ -180,7 +180,7 @@ message GetCertOperatorResponse {
 // --> GetCertListener
 message GetCertListenerRequest {}
 message GetCertListenerResponse {
-  // Listener's GRPC server certificate
+  // Listener's gRPC server certificate
   Certificate certificate = 1;
 }
 // <-- GetCertListener
