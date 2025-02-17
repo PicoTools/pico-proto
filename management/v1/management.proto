@@ -5,8 +5,6 @@ package management.v1;
 import "google/protobuf/wrappers.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/PicoTools/pico-shared/proto/gen/management/v1;managementv1";
-
 service ManagementService {
   // Get information about all registered operators
   rpc GetOperators ( GetOperatorsRequest ) returns ( GetOperatorsResponse );
@@ -35,10 +33,10 @@ service ManagementService {
   // Get CA certificate from generated PKI
   rpc GetCertCA ( GetCertCARequest ) returns ( GetCertCAResponse );
 
-  // Get operator's server GRPC certificate from PKI
+  // Get operator's server gRPC certificate from PKI
   rpc GetCertOperator ( GetCertOperatorRequest ) returns ( GetCertOperatorResponse );
 
-  // Get listener's server GRPC certificate from PKI
+  // Get listener's server gRPC certificate from PKI
   rpc GetCertListener ( GetCertListenerRequest ) returns ( GetCertListenerResponse );
 }
 
@@ -171,7 +169,7 @@ message GetCertCAResponse {
 // --> GetCertOperator
 message GetCertOperatorRequest {}
 message GetCertOperatorResponse {
-  // Operator's GRPC server certificate
+  // Operator's gRPC server certificate
   Certificate certificate = 1;
 }
 // <-- GetCertOperator
@@ -180,7 +178,7 @@ message GetCertOperatorResponse {
 // --> GetCertListener
 message GetCertListenerRequest {}
 message GetCertListenerResponse {
-  // Listener's GRPC server certificate
+  // Listener's gRPC server certificate
   Certificate certificate = 1;
 }
 // <-- GetCertListener

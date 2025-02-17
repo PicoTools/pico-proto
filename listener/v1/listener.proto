@@ -5,8 +5,6 @@ package listener.v1;
 import "google/protobuf/wrappers.proto";
 import "common/v1/common.proto";
 
-option go_package = "github.com/PicoTools/pico-shared/proto/gen/listener/v1;listenerv1";
-
 service ListenerService {
   // Update listener's information. Can be used to set location and meta infromation
   // of where listener works

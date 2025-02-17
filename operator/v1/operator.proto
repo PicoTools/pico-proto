@@ -6,8 +6,6 @@ import "google/protobuf/wrappers.proto";
 import "google/protobuf/timestamp.proto";
 import "common/v1/common.proto";
 
-option go_package = "github.com/PicoTools/pico-shared/proto/gen/operator/v1;operatorv1";
-
 service OperatorService {
   // Initial handshake to provide operator's cookie. If this stream
   // will be interrupted by operator - all subscriptions on another
