@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package common.v1;
 
-option go_package = "github.com/PicoTools/pico-shared/proto/gen/common/v1;commonv1";
-
 // Sleep capability:
 // Change sleep and jitter values on agent prorcess
 message CapSleep {
