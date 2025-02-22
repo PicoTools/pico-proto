@@ -319,10 +319,7 @@ message SetListenerColorResponse {}
 
 
 // --> Hello
-message HelloRequest {
-  // [MANDATORY] Operator's client version
-  string version = 1;
-}
+message HelloRequest {}
 // Message with handshake data from server
 message HandshakeResponse {
   // [MANDATORY] Operator's username
@@ -331,6 +328,8 @@ message HandshakeResponse {
   google.protobuf.Timestamp time = 2;
   // [MANDATORY] Operator's session cookie
   SessionCookie cookie = 3;
+  // [MANDATORY] Server's version
+  string version = 4;
 }
 message HelloResponse {
   oneof response {
