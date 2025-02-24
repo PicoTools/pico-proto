@@ -84,31 +84,39 @@ message GetTaskResponse {
   uint32 cap = 2;
   // [MANDATORY] Capability's task body
   oneof body {
-    common.v1.CapSleep sleep = 3;
-    common.v1.CapLs ls = 4;
-    common.v1.CapPwd pwd = 5;
+    common.v1.CapExit exit = 3;
+    common.v1.CapSleep sleep = 4;
+    common.v1.CapCp cp = 5;
     common.v1.CapCd cd = 6;
     common.v1.CapWhoami whoami = 7;
-    common.v1.CapPs ps = 8;
+    common.v1.CapJobkill jobkill = 8;
     common.v1.CapCat cat = 9;
     common.v1.CapExec exec = 10;
-    common.v1.CapCp cp = 11;
+    common.v1.CapPwd pwd = 11;
     common.v1.CapJobs jobs = 12;
-    common.v1.CapJobkill jobkill = 13;
-    common.v1.CapKill kill = 14;
-    common.v1.CapMv mv = 15;
+    common.v1.CapPs ps = 13;
+    common.v1.CapLs ls = 14;
+    common.v1.CapPause pause = 15;
     common.v1.CapMkdir mkdir = 16;
     common.v1.CapRm rm = 17;
-    common.v1.CapExecAssembly exec_assembly = 18;
+    common.v1.CapShell shell = 18;
     common.v1.CapShellcodeInjection shellcode_injection = 19;
-    common.v1.CapDownload download = 20;
-    common.v1.CapUpload upload = 21;
-    common.v1.CapPause pause = 22;
+    common.v1.CapUpload upload = 20;
+    common.v1.CapKill kill = 21;
+    common.v1.CapMv mv = 22;
     common.v1.CapDestroy destroy = 23;
     common.v1.CapExecDetach exec_detach = 24;
-    common.v1.CapShell shell = 25;
+    common.v1.CapExecAssembly exec_assembly = 25;
     common.v1.CapPpid ppid = 26;
-    common.v1.CapExit exit = 27;
+    common.v1.CapDownload download = 27;
+    common.v1.CapReserved23 reserved23 = 28;
+    common.v1.CapReserved24 reserved24 = 29;
+    common.v1.CapReserved25 reserved25 = 30;
+    common.v1.CapReserved26 reserved26 = 31;
+    common.v1.CapReserved27 reserved27 = 32;
+    common.v1.CapReserved28 reserved28 = 33;
+    common.v1.CapReserved29 reserved29 = 34;
+    common.v1.CapReserved30 reserved30 = 35;
   };
 }
 // <-- GetTask
