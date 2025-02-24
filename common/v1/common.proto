@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package common.v1;
 
+import "google/protobuf/wrappers.proto";
+
 // Exit capability:
 // Stop agent's process
 message CapExit {}
@@ -179,70 +181,70 @@ message CapDownload {
 // Reserved capability to use on your own
 message CapReserved23 {
   // optional arguments
-  optional string args = 1;
+  google.protobuf.StringValue args = 1;
   // optional blob
-  optional bytes blob = 2;
+  google.protobuf.BytesValue blob = 2;
 }
 
 // Reserved24
 // Reserved capability to use on your own
 message CapReserved24 {
   // optional arguments
-  optional string args = 1;
+  google.protobuf.StringValue args = 1;
   // optional blob
-  optional bytes blob = 2;
+  google.protobuf.BytesValue blob = 2;
 }
 
 // Reserved25
 // Reserved capability to use on your own
 message CapReserved25 {
   // optional arguments
-  optional string args = 1;
+  google.protobuf.StringValue args = 1;
   // optional blob
-  optional bytes blob = 2;
+  google.protobuf.BytesValue blob = 2;
 }
 
 // Reserved26
 // Reserved capability to use on your own
 message CapReserved26 {
   // optional arguments
-  optional string args = 1;
+  google.protobuf.StringValue args = 1;
   // optional blob
-  optional bytes blob = 2;
+  google.protobuf.BytesValue blob = 2;
 }
 
 // Reserved27
 // Reserved capability to use on your own
 message CapReserved27 {
   // optional arguments
-  optional string args = 1;
+  google.protobuf.StringValue args = 1;
   // optional blob
-  optional bytes blob = 2;
+  google.protobuf.BytesValue blob = 2;
 }
 
 // Reserved28
 // Reserved capability to use on your own
 message CapReserved28 {
   // optional arguments
-  optional string args = 1;
+  google.protobuf.StringValue args = 1;
   // optional blob
-  optional bytes blob = 2;
+  google.protobuf.BytesValue blob = 2;
 }
 
 // Reserved29
 // Reserved capability to use on your own
 message CapReserved29 {
   // optional arguments
-  optional string args = 1;
+  google.protobuf.StringValue args = 1;
   // optional blob
-  optional bytes blob = 2;
+  google.protobuf.BytesValue blob = 2;
 }
 
 // Reserved30
 // Reserved capability to use on your own
 message CapReserved30 {
   // optional arguments
-  optional string args = 1;
+  google.protobuf.StringValue args = 1;
   // optional blob
-  optional bytes blob = 2;
+  google.protobuf.BytesValue blob = 2;
 }
