@@ -2,6 +2,10 @@ syntax = "proto3";
 
 package common.v1;
 
+// Exit capability:
+// Stop agent's process
+message CapExit {}
+
 // Sleep capability:
 // Change sleep and jitter values on agent prorcess
 message CapSleep {
@@ -10,56 +14,6 @@ message CapSleep {
   // Jitter value in range 1-99
   uint32 jitter = 2;
 }
-
-
-// Listing capability:
-// Get list of files and directories specified by path
-message CapLs {
-  // Path to file or directory
-  string path = 1;
-}
-
-
-// Process working directory capability:
-// Get current agent's process working directory
-message CapPwd {}
-
-
-// Change process working directory capability:
-// Change process working directory of agent's process
-message CapCd {
-  // Path to directory
-  string path = 1;
-}
-
-
-// Whoami capability:
-// Get information about user under which agent's process working
-message CapWhoami {}
-
-
-// Process list capability:
-// Get list of process on target OS
-message CapPs {}
-
-
-// Print file's content capability:
-// Print content of file specified by path (may be used to handle different encoders)
-message CapCat {
-  // Path to file
-  string path = 1;
-}
-
-
-// Execute command capability:
-// Execute command with arguments on target OS
-message CapExec {
-  // Command to execute (may be absolute path)
-  string cmd = 1;
-  // Arguments to execute command with
-  string args = 2;
-}
-
 
 // Copy capability:
 // Copy files or directories specified with source and destination pathes
@@ -70,11 +24,16 @@ message CapCp {
   string dst = 2;
 }
 
+// Change process working directory capability:
+// Change process working directory of agent's process
+message CapCd {
+  // Path to directory
+  string path = 1;
+}
 
-// Jobs capability:
-// Get active jobs (other capabilities execution flows) on agent
-message CapJobs {}
-
+// Whoami capability:
+// Get information about user under which agent's process working
+message CapWhoami {}
 
 // Kill job capability:
 // Kill active job on agent specified by its ID
@@ -83,24 +42,47 @@ message CapJobkill {
   uint64 id = 1;
 }
 
-
-// Stop process capability:
-// Kill process specified by process ID (PID)
-message CapKill {
-  // Process ID to kill
-  uint64 pid = 1;
+// Print file's content capability:
+// Print content of file specified by path (may be used to handle different encoders)
+message CapCat {
+  // Path to file
+  string path = 1;
 }
 
-
-// Copy capability:
-// Move files or directories specified with source and destination pathes
-message CapMv {
-  // Source path to file or directory
-  string src = 1;
-  // Destination path to file or directory
-  string dst = 2;
+// Execute command capability:
+// Execute command with arguments on target OS
+message CapExec {
+  // Command to execute (may be absolute path)
+  string cmd = 1;
+  // Arguments to execute command with
+  string args = 2;
 }
 
+// Process working directory capability:
+// Get current agent's process working directory
+message CapPwd {}
+
+// Jobs capability:
+// Get active jobs (other capabilities execution flows) on agent
+message CapJobs {}
+
+// Process list capability:
+// Get list of process on target OS
+message CapPs {}
+
+// Listing capability:
+// Get list of files and directories specified by path
+message CapLs {
+  // Path to file or directory
+  string path = 1;
+}
+
+// Pause capability:
+// Pause agent's process execution on specified value (in seconds)
+message CapPause {
+  // Number of seconds to pause agent's execution
+  uint32 pause = 1;
+}
 
 // Create directory capability:
 // Create directory on target FS specified by path
@@ -109,7 +91,6 @@ message CapMkdir {
   string path = 1;
 }
 
-
 // Remove files/directories capability:
 // Remove files/directories on target FS specified by path
 message CapRm {
@@ -117,16 +98,12 @@ message CapRm {
   string path = 1;
 }
 
-
-// .NET in-memory execution capability:
-// Execute .NET binary with arguments in CLR runtime in agent's process memory
-message CapExecAssembly {
-  // Arguments to execute .NET binary with
-  string args = 1;
-  // Blob with .NET binary program
-  bytes blob = 2;
+// Execute shell command capability:
+// Execute shell command on target OS (/bin/sh, powershell.exe, etc)
+message CapShell {
+  // Command string to execute in shell
+  string cmd = 1;
 }
-
 
 // Shellcode injection capability:
 // Inject and execute shellcode in specified PID
@@ -137,15 +114,6 @@ message CapShellcodeInjection {
   bytes blob = 2;
 }
 
-
-// File download capability:
-// Download file from target FS specified by path
-message CapDownload {
-  // Path to file or directory
-  string path = 1;
-}
-
-
 // File upload capability:
 // Upload file on target FS specified by path
 message CapUpload {
@@ -155,19 +123,25 @@ message CapUpload {
   bytes blob = 2;
 }
 
-
-// Pause capability:
-// Pause agent's process execution on specified value (in seconds)
-message CapPause {
-  // Number of seconds to pause agent's execution
-  uint32 pause = 1;
+// Stop process capability:
+// Kill process specified by process ID (PID)
+message CapKill {
+  // Process ID to kill
+  uint64 pid = 1;
 }
 
+// Copy capability:
+// Move files or directories specified with source and destination pathes
+message CapMv {
+  // Source path to file or directory
+  string src = 1;
+  // Destination path to file or directory
+  string dst = 2;
+}
 
 // Desctruction capability:
 // Destroy agent itself (with removing of executable and self killing)
 message CapDestroy {}
-
 
 // Execute detached command capability:
 // Execute detached command with arguments on target OS (no output will be provided)
@@ -178,14 +152,14 @@ message CapExecDetach {
   string args = 2;
 }
 
-
-// Execute shell command capability:
-// Execute shell command on target OS (/bin/sh, powershell.exe, etc)
-message CapShell {
-  // Command string to execute in shell
-  string cmd = 1;
+// .NET in-memory execution capability:
+// Execute .NET binary with arguments in CLR runtime in agent's process memory
+message CapExecAssembly {
+  // Arguments to execute .NET binary with
+  string args = 1;
+  // Blob with .NET binary program
+  bytes blob = 2;
 }
-
 
 // Spoof process PID capability:
 // Spoof PPID on agent's process on specified value. For rollback you can implement logic of special value, e.g. 0
@@ -194,7 +168,81 @@ message CapPpid {
   uint64 ppid = 1;
 }
 
+// File download capability:
+// Download file from target FS specified by path
+message CapDownload {
+  // Path to file or directory
+  string path = 1;
+}
 
-// Exit capability:
-// Stop agent's process
-message CapExit {}
+// Reserved23
+// Reserved capability to use on your own
+message CapReserved23 {
+  // optional arguments
+  optional string args = 1;
+  // optional blob
+  optional bytes blob = 2;
+}
+
+// Reserved24
+// Reserved capability to use on your own
+message CapReserved24 {
+  // optional arguments
+  optional string args = 1;
+  // optional blob
+  optional bytes blob = 2;
+}
+
+// Reserved25
+// Reserved capability to use on your own
+message CapReserved25 {
+  // optional arguments
+  optional string args = 1;
+  // optional blob
+  optional bytes blob = 2;
+}
+
+// Reserved26
+// Reserved capability to use on your own
+message CapReserved26 {
+  // optional arguments
+  optional string args = 1;
+  // optional blob
+  optional bytes blob = 2;
+}
+
+// Reserved27
+// Reserved capability to use on your own
+message CapReserved27 {
+  // optional arguments
+  optional string args = 1;
+  // optional blob
+  optional bytes blob = 2;
+}
+
+// Reserved28
+// Reserved capability to use on your own
+message CapReserved28 {
+  // optional arguments
+  optional string args = 1;
+  // optional blob
+  optional bytes blob = 2;
+}
+
+// Reserved29
+// Reserved capability to use on your own
+message CapReserved29 {
+  // optional arguments
+  optional string args = 1;
+  // optional blob
+  optional bytes blob = 2;
+}
+
+// Reserved30
+// Reserved capability to use on your own
+message CapReserved30 {
+  // optional arguments
+  optional string args = 1;
+  // optional blob
+  optional bytes blob = 2;
+}
