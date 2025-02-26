@@ -56,14 +56,14 @@ message RegisterAgentRequest {
   google.protobuf.BoolValue privileged = 9;
   // Name of agent's process
   google.protobuf.StringValue proc_name = 10;
-  // agent's process ID
+  // Agent's process ID
   google.protobuf.UInt64Value pid = 11;
   // [MANDATORY] Process architecture
   uint32 arch = 12;
-  // [MANDATORY] Sleep value of agent's process (in seconds)
-  uint32 sleep = 13;
-  // [MANDATORY] Jitter value of agent's process (in range 1-99)
-  uint32 jitter = 14;
+  // Sleep value of agent's process (in seconds)
+  google.protobuf.UInt32Value sleep = 13;
+  // Jitter value of agent's process (in range 1-99)
+  google.protobuf.UInt32Value jitter = 14;
   // [MANDATORY] Binary mask represented supported agent's capabilities
   uint32 caps = 15;
 }
