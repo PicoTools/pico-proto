@@ -7,7 +7,7 @@ This repo includes messages and gRPC services, which are used by Pico C2 framewo
 - [pico-cli](https://github.com/PicoTools/pico-cli): Operator's CLI
 - [pico-ctl](https://github.com/PicoTools/pico): Management's CLI
 
-> :info: You can use this schemes for creating of your own stuff.
+> :exclamation: You can use this schemes for creating of your own stuff.
 
 ## common
 
