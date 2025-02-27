@@ -5,7 +5,7 @@
 This repo includes messages and gRPC services, which are used by Pico C2 framework:
 - [pico](https://github.com/PicoTools/pico): C2 server
 - [pico-cli](https://github.com/PicoTools/pico-cli): Operator's CLI
-- [pico-ctl](https://github.com/PicoTools/pico/cmd/pico-ctl): Management's CLI
+- [pico-ctl](https://github.com/PicoTools/pico): Management's CLI
 
 ## common
 
@@ -17,7 +17,7 @@ Messages and gRPC service, used for communication between [server](https://githu
 
 ## management
 
-Messages and gRPC service, used for communication between [server](https://github.com/PicoTools/pico) and [management cli](https://github.com/PicoTools/pico/cmd/pico-ctl). Feel free to create your own management CLI/UI/GUI/TUI realizations based on this one.
+Messages and gRPC service, used for communication between [server](https://github.com/PicoTools/pico) and [management cli](https://github.com/PicoTools/pico). Feel free to create your own management CLI/UI/GUI/TUI realizations based on this one.
 
 ## operator
 
